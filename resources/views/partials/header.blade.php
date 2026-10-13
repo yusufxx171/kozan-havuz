@@ -23,7 +23,6 @@
             </span>
         </div>
         <div class="flex items-center gap-4">
-            <span class="hidden font-medium italic text-navy-200 xl:inline">{{ $site['slogan'] ?? '' }}</span>
             @if (! empty($site['instagram']))
                 <a href="{{ $site['instagram'] }}" target="_blank" rel="noopener" class="flex items-center gap-2 transition hover:text-white" aria-label="Instagram">
                     <x-site-icon name="instagram" class="size-4" /> <span class="hidden lg:inline">@kozan.havuz</span>
