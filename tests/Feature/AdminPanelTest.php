@@ -48,6 +48,7 @@ class AdminPanelTest extends TestCase
                 'dashboard' => ['/admin'],
                 'messages' => ['/admin/contact-messages'],
                 'settings' => ['/admin/site-settings'],
+                'profile' => ['/admin/profile'],
             ])
             ->all();
     }

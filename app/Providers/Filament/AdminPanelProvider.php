@@ -29,6 +29,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->profile(isSimple: false)
             ->brandName('Kozan Havuz')
             ->brandLogo(asset('images/logo.png'))
             ->darkModeBrandLogo(asset('images/logo-white.png'))
