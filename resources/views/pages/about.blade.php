@@ -13,7 +13,7 @@
                 </div>
             </div>
             <div class="reveal relative">
-                <img src="{{ Storage::url('seed/hero/selale-havuz.jpg') }}" alt="Kozan Havuz uygulaması" loading="lazy" class="aspect-[4/3] w-full rounded-[2.5rem] rounded-br-[6rem] object-cover shadow-2xl shadow-navy-900/20">
+                <img src="{{ Media::url('seed/hero/selale-havuz.jpg') }}" alt="Kozan Havuz uygulaması" loading="lazy" class="aspect-[4/3] w-full rounded-[2.5rem] rounded-br-[6rem] object-cover shadow-2xl shadow-navy-900/20">
                 <div class="absolute -bottom-8 -left-2 rounded-3xl bg-navy-800 p-6 text-white shadow-xl sm:left-8">
                     <p class="text-sm text-navy-100 italic">Suyun huzurunu</p>
                     <p class="text-xl font-extrabold">yaşam alanlarınıza <span class="text-leaf-400">taşıyoruz.</span></p>

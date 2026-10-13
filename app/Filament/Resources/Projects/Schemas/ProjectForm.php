@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Projects\Schemas;
 
 use App\Filament\Support\Fields;
+use App\Support\Media;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Textarea;
@@ -32,7 +33,7 @@ class ProjectForm
                     Section::make('Görseller')->schema([
                         Fields::image('projects')->label('Kapak görseli')->required(),
                         FileUpload::make('gallery')->label('Galeri')->image()->multiple()->reorderable()
-                            ->disk('public')->directory('projects/gallery')->maxFiles(20)->maxSize(5120),
+                            ->disk(Media::diskName())->directory('projects/gallery')->maxFiles(20)->maxSize(5120),
                     ]),
                     Fields::publishing(),
                 ])->columnSpan(['lg' => 1]),

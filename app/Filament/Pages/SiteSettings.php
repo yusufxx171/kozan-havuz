@@ -3,6 +3,7 @@
 namespace App\Filament\Pages;
 
 use App\Models\Setting;
+use App\Support\Media;
 use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Forms\Components\FileUpload;
@@ -74,7 +75,7 @@ class SiteSettings extends Page
                             TextInput::make('tagline')->label('Tanıtım cümlesi'),
                             Textarea::make('footer_about')->label('Alt bilgi (footer) metni')->rows(3),
                             FileUpload::make('catalog_pdf')->label('Katalog (PDF)')->acceptedFileTypes(['application/pdf'])
-                                ->disk('public')->directory('catalog')->maxSize(20480)->downloadable(),
+                                ->disk(Media::diskName())->directory('catalog')->maxSize(20480)->downloadable(),
                         ]),
                     ]),
                     Tab::make('SEO')->icon(Heroicon::OutlinedMagnifyingGlass)->schema([

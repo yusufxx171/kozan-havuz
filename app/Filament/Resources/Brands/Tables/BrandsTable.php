@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Brands\Tables;
 
+use App\Support\Media;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\ImageColumn;
@@ -17,7 +18,7 @@ class BrandsTable
             ->defaultSort('sort_order')
             ->reorderable('sort_order')
             ->columns([
-                ImageColumn::make('logo')->label('')->disk('public')->imageHeight(40),
+                ImageColumn::make('logo')->label('')->disk(Media::diskName())->imageHeight(40),
                 TextColumn::make('name')->label('Marka')->searchable()->weight('bold'),
                 ToggleColumn::make('is_active')->label('Yayında'),
             ])

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Projects\Tables;
 
+use App\Support\Media;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\ImageColumn;
@@ -17,7 +18,7 @@ class ProjectsTable
             ->defaultSort('sort_order')
             ->reorderable('sort_order')
             ->columns([
-                ImageColumn::make('image')->label('')->disk('public')->imageSize(56),
+                ImageColumn::make('image')->label('')->disk(Media::diskName())->imageSize(56),
                 TextColumn::make('title')->label('Proje')->searchable()->weight('bold'),
                 TextColumn::make('type')->label('Tip')->badge(),
                 TextColumn::make('location')->label('Konum'),

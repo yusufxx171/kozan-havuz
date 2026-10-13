@@ -10,7 +10,7 @@
                 </a>
             @endforeach
             @if (! empty($site['catalog_pdf']))
-                <a href="{{ Storage::url($site['catalog_pdf']) }}" target="_blank" class="ml-auto flex shrink-0 items-center gap-2 rounded-full bg-navy-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-navy-800">
+                <a href="{{ Media::url($site['catalog_pdf']) }}" target="_blank" class="ml-auto flex shrink-0 items-center gap-2 rounded-full bg-navy-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-navy-800">
                     <x-site-icon name="download" class="size-4" /> Katalog (PDF)
                 </a>
             @endif

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Support;
 
+use App\Support\Media;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -63,7 +64,7 @@ class Fields
             ->label($label)
             ->image()
             ->imageEditor()
-            ->disk('public')
+            ->disk(Media::diskName())
             ->directory($directory)
             ->maxSize(5120)
             ->helperText('JPG/PNG/WebP, en fazla 5 MB.');

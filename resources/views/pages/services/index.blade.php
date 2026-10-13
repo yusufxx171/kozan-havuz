@@ -19,7 +19,7 @@
                 <div class="mt-12 grid gap-4 sm:grid-cols-2 sm:gap-6">
                     @foreach ($projects as $project)
                         <figure class="group reveal relative overflow-hidden rounded-[2rem] shadow-lg">
-                            <img src="{{ Storage::url($project->image) }}" alt="{{ $project->title }}" loading="lazy" class="aspect-[16/10] w-full object-cover transition duration-700 group-hover:scale-105">
+                            <img src="{{ Media::url($project->image) }}" alt="{{ $project->title }}" loading="lazy" class="aspect-[16/10] w-full object-cover transition duration-700 group-hover:scale-105">
                             <figcaption class="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 bg-gradient-to-t from-navy-950/90 to-transparent p-6 pt-20">
                                 <span>
                                     <span class="block text-sm font-semibold text-leaf-400">{{ $project->type }} · {{ $project->location }}</span>

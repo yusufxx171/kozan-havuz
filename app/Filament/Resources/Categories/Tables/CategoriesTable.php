@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Categories\Tables;
 
+use App\Support\Media;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -16,7 +17,7 @@ class CategoriesTable
             ->defaultSort('sort_order')
             ->reorderable('sort_order')
             ->columns([
-                ImageColumn::make('image')->label('')->disk('public')->imageSize(56),
+                ImageColumn::make('image')->label('')->disk(Media::diskName())->imageSize(56),
                 TextColumn::make('name')->label('Kategori')->searchable()->weight('bold')->description(fn ($record): ?string => $record->subtitle),
                 TextColumn::make('products_count')->label('Ürün sayısı')->counts('products')->badge(),
                 ToggleColumn::make('is_active')->label('Yayında'),

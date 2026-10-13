@@ -7,7 +7,7 @@
 @php
     $pageTitle = $title ? $title.' | '.($site['company_name'] ?? 'Kozan Havuz') : ($site['seo_title'] ?? config('app.name'));
     $pageDescription = $description ?: ($site['seo_description'] ?? null);
-    $ogImage = $image ? Storage::url($image) : asset('images/logo.png');
+    $ogImage = $image ? Media::url($image) : asset('images/logo.png');
 @endphp
 
 <!DOCTYPE html>

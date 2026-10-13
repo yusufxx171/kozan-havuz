@@ -2,7 +2,7 @@
 
 <section class="container-site py-16 sm:py-20">
     <div class="reveal relative isolate overflow-hidden rounded-[2rem] bg-navy-800 px-6 py-12 sm:px-12 lg:px-16 lg:py-16">
-        <img src="{{ Storage::url('seed/hero/selale-havuz.jpg') }}" alt="" class="absolute inset-0 -z-20 size-full object-cover opacity-30">
+        <img src="{{ Media::url('seed/hero/selale-havuz.jpg') }}" alt="" class="absolute inset-0 -z-20 size-full object-cover opacity-30">
         <div class="absolute inset-0 -z-10 bg-gradient-to-r from-navy-900 via-navy-800/90 to-navy-700/40"></div>
         <div class="grid items-center gap-8 lg:grid-cols-[1fr_auto]">
             <div>

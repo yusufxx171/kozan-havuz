@@ -4,7 +4,7 @@
     <section class="py-16 sm:py-24">
         <div class="container-site grid gap-12 lg:grid-cols-[1fr_360px] lg:gap-16">
             <article>
-                <img src="{{ Storage::url($service->image) }}" alt="{{ $service->title }}" class="aspect-[16/9] w-full rounded-[2rem] object-cover shadow-xl">
+                <img src="{{ Media::url($service->image) }}" alt="{{ $service->title }}" class="aspect-[16/9] w-full rounded-[2rem] object-cover shadow-xl">
                 <div class="prose-site mt-10">{!! $service->body !!}</div>
 
                 @if (! empty($service->features))

@@ -12,7 +12,7 @@
                 ]) aria-roledescription="slide" aria-label="{{ $loop->iteration }} / {{ $loop->count }}">
                     {{-- Image --}}
                     <div class="relative h-64 sm:h-96 lg:absolute lg:inset-y-0 lg:right-0 lg:h-auto lg:w-[54%]">
-                        <img src="{{ Storage::url($slide->image) }}" alt="{{ $slide->title }}"
+                        <img src="{{ Media::url($slide->image) }}" alt="{{ $slide->title }}"
                              @if (! $loop->first) loading="lazy" @else fetchpriority="high" @endif
                              class="size-full object-cover [clip-path:url(#wave-bottom)] lg:[clip-path:url(#wave-left)]">
                         <svg class="pointer-events-none absolute inset-0 hidden size-full -translate-x-3 lg:block" viewBox="0 0 1 1" preserveAspectRatio="none" aria-hidden="true">
@@ -97,7 +97,7 @@
         <div class="container-site grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <div class="reveal relative">
                 <div class="overflow-hidden rounded-[2.5rem] rounded-tl-[6rem] shadow-2xl shadow-navy-900/20">
-                    <img src="{{ Storage::url('seed/hero/gece-havuz.jpg') }}" alt="Kozan Havuz gece aydınlatmalı havuz uygulaması" loading="lazy" class="aspect-[4/3] w-full object-cover">
+                    <img src="{{ Media::url('seed/hero/gece-havuz.jpg') }}" alt="Kozan Havuz gece aydınlatmalı havuz uygulaması" loading="lazy" class="aspect-[4/3] w-full object-cover">
                 </div>
                 <div class="absolute -bottom-8 left-4 flex items-center gap-4 rounded-3xl bg-white p-4 pr-6 shadow-xl sm:left-8">
                     <span class="flex size-14 items-center justify-center rounded-2xl bg-navy-700 text-white"><x-site-icon name="headset" class="size-7" /></span>
@@ -126,7 +126,7 @@
                 <div class="mt-10 flex flex-wrap gap-3">
                     <a href="{{ route('about') }}" class="btn-navy">Hakkımızda <x-site-icon name="arrow-right" class="size-4" /></a>
                     @if (! empty($site['catalog_pdf']))
-                        <a href="{{ Storage::url($site['catalog_pdf']) }}" target="_blank" class="btn-outline"><x-site-icon name="download" class="size-4" /> Kataloğu İndir</a>
+                        <a href="{{ Media::url($site['catalog_pdf']) }}" target="_blank" class="btn-outline"><x-site-icon name="download" class="size-4" /> Kataloğu İndir</a>
                     @endif
                 </div>
             </div>
@@ -141,7 +141,7 @@
             <div class="mt-12 grid gap-6 md:grid-cols-3">
                 @foreach ($categories as $category)
                     <a href="{{ route('products.category', $category) }}" class="group reveal relative isolate flex min-h-[340px] flex-col justify-end overflow-hidden rounded-[2rem] p-7 shadow-xl shadow-navy-900/10 sm:min-h-[420px]">
-                        <img src="{{ Storage::url($category->image) }}" alt="{{ $category->name }}" loading="lazy" class="absolute inset-0 -z-20 size-full object-cover transition duration-700 group-hover:scale-110">
+                        <img src="{{ Media::url($category->image) }}" alt="{{ $category->name }}" loading="lazy" class="absolute inset-0 -z-20 size-full object-cover transition duration-700 group-hover:scale-110">
                         <div class="absolute inset-0 -z-10 bg-gradient-to-t from-navy-950/95 via-navy-900/50 to-transparent"></div>
                         <span class="mb-auto flex size-14 items-center justify-center rounded-2xl bg-white/15 text-white ring-1 ring-white/30 backdrop-blur">
                             <x-site-icon :name="$category->icon ?: 'droplet'" class="size-7" />
@@ -207,7 +207,7 @@
                 <a href="{{ route('products.category', 'havuz-otomasyon-sistemleri') }}" class="btn-primary mt-10">Otomasyon Ürünleri <x-site-icon name="arrow-right" class="size-4" /></a>
             </div>
             <div class="reveal relative">
-                <img src="{{ Storage::url('seed/misc/akilli-kontrol.jpg') }}" alt="Akıllı havuz kontrol uygulaması" loading="lazy" class="w-full rounded-[2rem] shadow-2xl ring-1 ring-white/10">
+                <img src="{{ Media::url('seed/misc/akilli-kontrol.jpg') }}" alt="Akıllı havuz kontrol uygulaması" loading="lazy" class="w-full rounded-[2rem] shadow-2xl ring-1 ring-white/10">
                 <div class="absolute -bottom-6 left-6 grid grid-cols-3 gap-2 rounded-2xl bg-white p-3 text-center text-navy-900 shadow-xl sm:left-10 sm:gap-4 sm:p-4">
                     @foreach ([['pH', '7.2'], ['ORP', '650 mV'], ['Klor', '1.5 ppm']] as [$label, $value])
                         <span class="px-2">
@@ -279,7 +279,7 @@
                 <div class="mt-12 grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-4">
                     @foreach ($projects as $project)
                         <figure class="group reveal relative overflow-hidden rounded-3xl shadow-lg">
-                            <img src="{{ Storage::url($project->image) }}" alt="{{ $project->title }}" loading="lazy" class="aspect-[4/5] w-full object-cover transition duration-700 group-hover:scale-110 sm:aspect-[3/4]">
+                            <img src="{{ Media::url($project->image) }}" alt="{{ $project->title }}" loading="lazy" class="aspect-[4/5] w-full object-cover transition duration-700 group-hover:scale-110 sm:aspect-[3/4]">
                             <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy-950/90 to-transparent p-4 pt-16 sm:p-5">
                                 <span class="block text-xs font-semibold text-leaf-400 sm:text-sm">{{ $project->location }}</span>
                                 <span class="block text-sm font-bold text-white sm:text-lg">{{ $project->title }}</span>

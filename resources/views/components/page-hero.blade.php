@@ -2,7 +2,7 @@
 
 <section class="relative isolate overflow-hidden bg-navy-900">
     @if ($image)
-        <img src="{{ Storage::url($image) }}" alt="" class="absolute inset-0 -z-20 size-full object-cover opacity-35">
+        <img src="{{ Media::url($image) }}" alt="" class="absolute inset-0 -z-20 size-full object-cover opacity-35">
     @endif
     <div class="absolute inset-0 -z-10 bg-gradient-to-r from-navy-950/95 via-navy-900/85 to-navy-800/40"></div>
     <img src="{{ asset('images/logo-white.png') }}" alt="" class="pointer-events-none absolute top-1/2 -right-16 -z-10 hidden w-80 -translate-y-1/2 opacity-[0.06] md:block" aria-hidden="true">

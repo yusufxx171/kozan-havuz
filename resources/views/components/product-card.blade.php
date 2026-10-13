@@ -2,7 +2,7 @@
 
 <a href="{{ route('products.show', $product) }}" class="group card reveal flex flex-col overflow-hidden transition duration-300 hover:-translate-y-1 hover:border-leaf-200 hover:shadow-[0_20px_50px_-20px_rgba(0,65,107,0.35)]">
     <div class="relative aspect-square overflow-hidden bg-white p-6">
-        <img src="{{ Storage::url($product->image) }}" alt="{{ $product->name }}" loading="lazy" class="size-full object-contain transition duration-500 group-hover:scale-105">
+        <img src="{{ Media::url($product->image) }}" alt="{{ $product->name }}" loading="lazy" class="size-full object-contain transition duration-500 group-hover:scale-105">
         @if ($product->relationLoaded('category') && $product->category)
             <span class="absolute top-4 left-4 rounded-full bg-navy-50 px-3 py-1 text-xs font-semibold text-navy-700">{{ $product->category->name }}</span>
         @endif

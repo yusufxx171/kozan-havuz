@@ -6,12 +6,12 @@
             <div class="lg:sticky lg:top-32 lg:self-start">
                 <div class="card relative overflow-hidden p-8 sm:p-12">
                     <img src="{{ asset('images/logo.png') }}" alt="" class="absolute -right-16 -bottom-16 w-64 opacity-[0.05]" aria-hidden="true">
-                    <img src="{{ Storage::url($product->image) }}" alt="{{ $product->name }}" class="relative mx-auto aspect-square w-full max-w-md object-contain">
+                    <img src="{{ Media::url($product->image) }}" alt="{{ $product->name }}" class="relative mx-auto aspect-square w-full max-w-md object-contain">
                 </div>
                 @if (! empty($product->gallery))
                     <div class="mt-4 grid grid-cols-4 gap-3">
                         @foreach ($product->gallery as $image)
-                            <img src="{{ Storage::url($image) }}" alt="{{ $product->name }}" loading="lazy" class="aspect-square w-full rounded-2xl border border-slate-100 object-contain p-2">
+                            <img src="{{ Media::url($image) }}" alt="{{ $product->name }}" loading="lazy" class="aspect-square w-full rounded-2xl border border-slate-100 object-contain p-2">
                         @endforeach
                     </div>
                 @endif

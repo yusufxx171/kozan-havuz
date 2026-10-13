@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Products\Tables;
 
+use App\Support\Media;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -21,7 +22,7 @@ class ProductsTable
             ->defaultSort('sort_order')
             ->reorderable('sort_order')
             ->columns([
-                ImageColumn::make('image')->label('')->disk('public')->square()->imageSize(56),
+                ImageColumn::make('image')->label('')->disk(Media::diskName())->square()->imageSize(56),
                 TextColumn::make('name')->label('Ürün')->searchable()->sortable()->weight('bold')
                     ->description(fn ($record): ?string => $record->summary),
                 TextColumn::make('category.name')->label('Kategori')->badge()->sortable(),

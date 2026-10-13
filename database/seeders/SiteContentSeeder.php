@@ -9,9 +9,9 @@ use App\Models\Project;
 use App\Models\Service;
 use App\Models\Setting;
 use App\Models\Slider;
+use App\Support\Media;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 /**
@@ -38,8 +38,8 @@ class SiteContentSeeder extends Seeder
         foreach (File::allFiles(database_path('seeders/images')) as $file) {
             $target = 'seed/'.$file->getRelativePathname();
 
-            if (! Storage::disk('public')->exists($target)) {
-                Storage::disk('public')->put($target, $file->getContents());
+            if (! Media::disk()->exists($target)) {
+                Media::disk()->put($target, $file->getContents());
             }
         }
     }

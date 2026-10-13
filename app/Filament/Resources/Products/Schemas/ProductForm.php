@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Products\Schemas;
 
 use App\Filament\Support\Fields;
+use App\Support\Media;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
@@ -59,7 +60,7 @@ class ProductForm
                     Section::make('Görseller')->schema([
                         Fields::image('products')->label('Ana görsel')->required(),
                         FileUpload::make('gallery')->label('Galeri')->image()->multiple()->reorderable()
-                            ->disk('public')->directory('products/gallery')->maxFiles(8)->maxSize(5120),
+                            ->disk(Media::diskName())->directory('products/gallery')->maxFiles(8)->maxSize(5120),
                     ]),
                     Fields::publishing(featured: true, featuredLabel: 'Öne çıkan ürün'),
                 ])->columnSpan(['lg' => 1]),
