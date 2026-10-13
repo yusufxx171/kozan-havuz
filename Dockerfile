@@ -7,7 +7,9 @@
 FROM serversideup/php:8.4-cli AS vendor
 WORKDIR /var/www/html
 COPY composer.json composer.lock ./
-RUN composer install --no-dev --no-interaction --no-scripts --no-autoloader --prefer-dist
+# Platform extensions (intl, gd, exif) are installed in the final image; skip the check here.
+RUN composer install --no-dev --no-interaction --no-scripts --no-autoloader --prefer-dist \
+    --ignore-platform-req=ext-intl --ignore-platform-req=ext-gd --ignore-platform-req=ext-exif
 
 ######################
 # 2) Front-end build #
