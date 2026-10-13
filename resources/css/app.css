@@ -1,0 +1,147 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+@theme {
+    --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+
+    /* Brand: navy (KOZAN) */
+    --color-navy-50: #eef6fb;
+    --color-navy-100: #d6e9f5;
+    --color-navy-200: #a9cfe8;
+    --color-navy-500: #0f6aa3;
+    --color-navy-600: #075486;
+    --color-navy-700: #00416b;
+    --color-navy-800: #003456;
+    --color-navy-900: #002640;
+    --color-navy-950: #00182a;
+
+    /* Brand: green (HAVUZ) */
+    --color-leaf-50: #f2f9ea;
+    --color-leaf-100: #e1f1cf;
+    --color-leaf-200: #c3e3a0;
+    --color-leaf-400: #7fc043;
+    --color-leaf-500: #67ad2c;
+    --color-leaf-600: #589d20;
+    --color-leaf-700: #447c18;
+    --color-leaf-800: #36621a;
+
+    /* Water accent */
+    --color-aqua-300: #7dd8f0;
+    --color-aqua-400: #38bfe6;
+    --color-aqua-500: #129fcb;
+
+    --animate-fade-up: fade-up 0.7s ease-out both;
+
+    @keyframes fade-up {
+        from {
+            opacity: 0;
+            transform: translateY(16px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}
+
+@utility btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-bold transition duration-200 focus-visible:outline-2 focus-visible:outline-offset-2;
+}
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+        @apply bg-white font-sans text-slate-600 antialiased;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+        @apply text-navy-900 tracking-tight;
+    }
+
+    [x-cloak] {
+        display: none !important;
+    }
+}
+
+@layer components {
+    .container-site {
+        @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+    }
+
+    .eyebrow {
+        @apply inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.14em] text-leaf-600;
+    }
+
+    .eyebrow::before {
+        content: '';
+        @apply h-0.5 w-6 rounded-full bg-leaf-500;
+    }
+
+    .section-title {
+        @apply text-3xl font-extrabold leading-tight text-navy-900 sm:text-4xl;
+    }
+
+    .btn-primary {
+        @apply btn bg-leaf-600 text-white shadow-lg shadow-leaf-600/25 hover:bg-leaf-700 focus-visible:outline-leaf-600;
+    }
+
+    .btn-navy {
+        @apply btn bg-navy-700 text-white shadow-lg shadow-navy-700/20 hover:bg-navy-800 focus-visible:outline-navy-700;
+    }
+
+    .btn-outline {
+        @apply btn border-2 border-navy-700/15 text-navy-800 hover:border-navy-700 hover:bg-navy-700 hover:text-white;
+    }
+
+    .btn-ghost-light {
+        @apply btn border-2 border-white/40 text-white hover:bg-white hover:text-navy-800;
+    }
+
+    .card {
+        @apply rounded-3xl border border-slate-100 bg-white shadow-[0_10px_40px_-18px_rgba(0,65,107,0.25)];
+    }
+
+    .prose-site {
+        @apply space-y-4 text-base leading-relaxed text-slate-600 sm:text-lg;
+    }
+
+    .prose-site strong {
+        @apply font-semibold text-navy-800;
+    }
+
+    .prose-site h2,
+    .prose-site h3 {
+        @apply pt-2 text-xl font-bold text-navy-900;
+    }
+
+    .prose-site ul {
+        @apply list-disc space-y-1 pl-5;
+    }
+
+    .prose-site a {
+        @apply font-semibold text-leaf-700 underline underline-offset-2;
+    }
+
+    .form-input {
+        @apply block w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-navy-900 placeholder:text-slate-400 transition focus:border-leaf-500 focus:bg-white focus:ring-4 focus:ring-leaf-500/15 focus:outline-none;
+    }
+
+    /* Only hidden when JS is running (html.js), so content never stays invisible. */
+    .js .reveal:not(.is-visible) {
+        @apply opacity-0;
+    }
+
+    .js .reveal.is-visible {
+        @apply animate-fade-up;
+    }
+}
