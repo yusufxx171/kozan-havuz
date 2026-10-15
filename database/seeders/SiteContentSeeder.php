@@ -319,8 +319,7 @@ class SiteContentSeeder extends Seeder
         Page::query()->updateOrCreate(['slug' => 'kvkk'], [
             'title' => 'KVKK Aydınlatma Metni',
             'body' => '<p>Bu metin, 6698 sayılı Kişisel Verilerin Korunması Kanunu kapsamında iletişim formu aracılığıyla paylaştığınız kişisel verilerin (ad soyad, telefon, e-posta ve mesaj içeriği) yalnızca talebinize dönüş yapmak amacıyla işlendiğini bildirmek için hazırlanmıştır.</p>'
-                .'<p>Verileriniz üçüncü kişilerle paylaşılmaz; Kanun’un 11. maddesi kapsamındaki haklarınız için bizimle iletişime geçebilirsiniz.</p>'
-                .'<p><em>Not: Bu metin taslaktır, yayın öncesi hukuki olarak gözden geçirilmelidir.</em></p>',
+                .'<p>Verileriniz üçüncü kişilerle paylaşılmaz; Kanun’un 11. maddesi kapsamındaki haklarınız için bizimle iletişime geçebilirsiniz.</p>',
         ]);
     }
 }
