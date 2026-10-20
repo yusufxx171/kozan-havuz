@@ -11,6 +11,7 @@
                     ['smartphone', 'Telefon / WhatsApp', $site['gsm'] ?? '', $phoneHref],
                     ['phone', 'Sabit Hat', $site['phone'] ?? '', 'tel:'.preg_replace('/\D+/', '', $site['phone'] ?? '')],
                     ['mail', 'E-posta', $site['email'] ?? '', 'mailto:'.($site['email'] ?? '')],
+                    ['mail', 'E-posta', $site['email_secondary'] ?? '', 'mailto:'.($site['email_secondary'] ?? '')],
                     ['map-pin', 'Adres', $site['address'] ?? '', 'https://www.google.com/maps/search/?api=1&query='.rawurlencode($site['address'] ?? '')],
                     ['clock', 'Çalışma Saatleri', $site['working_hours'] ?? '', null],
                 ] as [$icon, $label, $value, $href])

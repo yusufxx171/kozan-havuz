@@ -1,5 +1,5 @@
-<x-layouts.site title="Ürünler" description="Havuz kimyasalları, havuz ekipmanları ve havuz otomasyon sistemleri. Kozan Havuz ürün grupları.">
-    <x-page-hero title="Ürünlerimiz" subtitle="Havuz kimyasallarından ekipmanlara, akıllı otomasyon sistemlerine kadar ihtiyacınız olan tüm ürünler." image="seed/hero/kimyasal-havuz.jpg" :breadcrumbs="['Ürünler' => null]" />
+<x-layouts.site title="Ürünler" description="Havuz kimyasalları, ekipmanları ve otomasyon sistemleri; hamam-sauna ekipmanları, atık su arıtma, tesisat ve temizlik kimyasalları. Kozan Havuz ürün grupları.">
+    <x-page-hero title="Ürünlerimiz" subtitle="Havuz kimyasallarından ekipmanlara, hamam-sauna ekipmanlarından arıtma ve tesisat kimyasallarına kadar ihtiyacınız olan tüm ürünler." image="seed/hero/kimyasal-havuz.jpg" :breadcrumbs="['Ürünler' => null]" />
 
     {{-- Category quick nav --}}
     <div class="sticky top-20 z-30 border-b border-slate-100 bg-white/95 backdrop-blur lg:top-24">
@@ -28,11 +28,15 @@
                     </div>
                     <a href="{{ route('products.category', $category) }}" class="btn-outline shrink-0">Kategoriye Git <x-site-icon name="arrow-right" class="size-4" /></a>
                 </div>
-                <div class="mt-10 grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-4">
-                    @foreach ($category->products as $product)
-                        <x-product-card :product="$product" />
-                    @endforeach
-                </div>
+                @if ($category->products->isEmpty())
+                    <x-product-inquiry class="mt-10" :category="$category" />
+                @else
+                    <div class="mt-10 grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-4">
+                        @foreach ($category->products as $product)
+                            <x-product-card :product="$product" />
+                        @endforeach
+                    </div>
+                @endif
             </div>
         </section>
     @endforeach

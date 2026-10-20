@@ -1,4 +1,4 @@
-<x-layouts.site title="Uygulamalarımız" description="Havuz yapımı, ekipman montajı, su analizi, bakım-onarım, peyzaj ve danışmanlık hizmetlerimiz.">
+<x-layouts.site title="Uygulamalarımız" description="Havuz yapımı, ekipman montajı, su analizi, bakım-onarım, peyzaj, danışmanlık, hamam-sauna yapımı, su arıtma ve kapalı devre su şartlandırma hizmetlerimiz.">
     <x-page-hero title="Uygulamalarımız" subtitle="Havuzunuzu hayalinizdeki gibi tasarlıyor; projeden uygulamaya, bakımdan teknik desteğe kadar tüm süreçlerde yanınızda oluyoruz." image="seed/hero/gece-havuz.jpg" :breadcrumbs="['Uygulamalarımız' => null]" />
 
     <section class="py-16 sm:py-24">

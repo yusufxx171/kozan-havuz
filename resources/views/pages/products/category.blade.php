@@ -15,11 +15,15 @@
                 @endforeach
             </div>
 
-            <div class="mt-10 grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-4">
-                @foreach ($products as $product)
-                    <x-product-card :product="$product" />
-                @endforeach
-            </div>
+            @if ($products->isEmpty())
+                <x-product-inquiry class="mt-10" :category="$category" />
+            @else
+                <div class="mt-10 grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-4">
+                    @foreach ($products as $product)
+                        <x-product-card :product="$product" />
+                    @endforeach
+                </div>
+            @endif
         </div>
     </section>
 

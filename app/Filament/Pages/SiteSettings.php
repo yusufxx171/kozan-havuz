@@ -57,6 +57,7 @@ class SiteSettings extends Page
                             TextInput::make('phone')->label('Sabit hat')->tel(),
                             TextInput::make('whatsapp')->label('WhatsApp numarası')->helperText('Ülke koduyla, boşluksuz. Örn. 905392120695')->numeric(),
                             TextInput::make('email')->label('E-posta')->email()->helperText('İletişim formu bildirimleri bu adrese gelir.'),
+                            TextInput::make('email_secondary')->label('İkinci e-posta')->email()->helperText('Sitede ana e-postanın yanında gösterilir.'),
                             Textarea::make('address')->label('Adres')->rows(2)->columnSpanFull(),
                             TextInput::make('working_hours')->label('Çalışma saatleri'),
                             TextInput::make('map_embed')->label('Google Harita embed linki')->url()->columnSpanFull(),

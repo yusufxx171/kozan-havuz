@@ -18,7 +18,12 @@
             <a href="mailto:{{ $site['email'] ?? '' }}" class="flex items-center gap-2 transition hover:text-white">
                 <x-site-icon name="mail" class="size-4 text-leaf-400" /> {{ $site['email'] ?? '' }}
             </a>
-            <span class="hidden items-center gap-2 lg:flex">
+            @if (! empty($site['email_secondary']))
+                <a href="mailto:{{ $site['email_secondary'] }}" class="hidden items-center gap-2 transition hover:text-white lg:flex">
+                    <x-site-icon name="mail" class="size-4 text-leaf-400" /> {{ $site['email_secondary'] }}
+                </a>
+            @endif
+            <span class="hidden items-center gap-2 xl:flex">
                 <x-site-icon name="clock" class="size-4 text-leaf-400" /> {{ $site['working_hours'] ?? '' }}
             </span>
         </div>

@@ -31,6 +31,6 @@ class DatabaseSeeder extends Seeder
             $this->command?->info("Admin kullanıcısı: {$email} / {$password}");
         }
 
-        $this->call(SiteContentSeeder::class);
+        $this->call([SiteContentSeeder::class, ExpandedOfferingsSeeder::class]);
     }
 }

@@ -65,6 +65,13 @@
                         <x-site-icon name="mail" class="size-5 shrink-0 text-leaf-400" /> {{ $site['email'] ?? '' }}
                     </a>
                 </li>
+                @if (! empty($site['email_secondary']))
+                    <li>
+                        <a href="mailto:{{ $site['email_secondary'] }}" class="flex gap-3 break-all transition hover:text-white">
+                            <x-site-icon name="mail" class="size-5 shrink-0 text-leaf-400" /> {{ $site['email_secondary'] }}
+                        </a>
+                    </li>
+                @endif
                 <li class="flex gap-3">
                     <x-site-icon name="clock" class="size-5 shrink-0 text-leaf-400" /> {{ $site['working_hours'] ?? '' }}
                 </li>

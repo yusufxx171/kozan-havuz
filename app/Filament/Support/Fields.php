@@ -28,6 +28,8 @@ class Fields
         'filter' => 'Filtre', 'cpu' => 'Otomasyon', 'wrench' => 'Anahtar', 'settings' => 'Dişli',
         'test-tube' => 'Test tüpü', 'leaf' => 'Yaprak', 'lightbulb' => 'Aydınlatma', 'shield-check' => 'Kalkan',
         'award' => 'Ödül', 'headset' => 'Destek', 'sparkles' => 'Parıltı', 'blueprint' => 'Proje',
+        'flame' => 'Alev', 'thermometer' => 'Termometre', 'recycle' => 'Geri dönüşüm', 'glass-water' => 'Su bardağı',
+        'refresh-cw' => 'Döngü', 'snowflake' => 'Kar tanesi', 'spray-can' => 'Sprey', 'pipette' => 'Pipet',
     ];
 
     /**

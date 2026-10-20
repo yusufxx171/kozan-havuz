@@ -63,6 +63,7 @@ class SiteContentSeeder extends Seeder
             'gsm' => '0539 212 06 95',
             'whatsapp' => '905392120695',
             'email' => 'info@kozangrupticaret.com.tr',
+            'email_secondary' => 'info@kozanhavuz.com.tr',
             'address' => 'Altınşehir Mah. Uğur Sok. No:9B, 34775 Başakşehir / İstanbul',
             'working_hours' => 'Pazartesi – Cumartesi: 09:00 – 18:30',
             'instagram' => 'https://www.instagram.com/kozan.havuz/',

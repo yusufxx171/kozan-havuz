@@ -143,7 +143,7 @@
                     <a href="{{ route('products.category', $category) }}" class="group reveal relative isolate flex min-h-[340px] flex-col justify-end overflow-hidden rounded-[2rem] p-7 shadow-xl shadow-navy-900/10 sm:min-h-[420px]">
                         <img src="{{ Media::url($category->image) }}" alt="{{ $category->name }}" loading="lazy" class="absolute inset-0 -z-20 size-full object-cover transition duration-700 group-hover:scale-110">
                         <div class="absolute inset-0 -z-10 bg-gradient-to-t from-navy-950/95 via-navy-900/50 to-transparent"></div>
-                        <span class="text-sm font-semibold text-leaf-400">{{ $category->products_count }} ürün grubu</span>
+                        <span class="text-sm font-semibold text-leaf-400">{{ $category->products_count ? $category->products_count.' ürün grubu' : 'Bilgi ve teklif alın' }}</span>
                         <h3 class="mt-1 text-2xl font-extrabold text-white">{{ $category->name }}</h3>
                         <p class="mt-2 text-sm text-navy-100">{{ $category->subtitle }}</p>
                         <span class="mt-5 inline-flex items-center gap-2 text-sm font-bold text-white">
