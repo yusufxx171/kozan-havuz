@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\File;
 /**
  * Additional services, product categories with their products and contact details (October 2026).
  *
- * Only creates missing records, so it is safe to run on production:
+ * Only creates missing records (and only then touches the media disk), so it is safe to run on production:
  * php artisan db:seed --class=ExpandedOfferingsSeeder --force
  */
 class ExpandedOfferingsSeeder extends Seeder
@@ -53,7 +53,7 @@ class ExpandedOfferingsSeeder extends Seeder
         $nextSortOrder = (int) Service::query()->max('sort_order') + 1;
 
         foreach ($services as $index => [$title, $slug, $icon, $image, $summary, $features]) {
-            Service::query()->firstOrCreate(['slug' => $slug], [
+            Service::query()->firstOrCreate(['slug' => $slug], fn (): array => [
                 'title' => $title,
                 'icon' => $icon,
                 'summary' => $summary,
@@ -212,7 +212,7 @@ class ExpandedOfferingsSeeder extends Seeder
         $nextSortOrder = (int) Category::query()->max('sort_order') + 1;
 
         foreach ($categories as $index => $data) {
-            $category = Category::query()->firstOrCreate(['slug' => $data['slug']], [
+            $category = Category::query()->firstOrCreate(['slug' => $data['slug']], fn (): array => [
                 'name' => $data['name'],
                 'subtitle' => $data['subtitle'],
                 'description' => $data['description'],
@@ -222,7 +222,7 @@ class ExpandedOfferingsSeeder extends Seeder
             ]);
 
             foreach ($data['products'] as $productIndex => [$name, $slug, $summary, $specValues]) {
-                Product::query()->firstOrCreate(['slug' => $slug], [
+                Product::query()->firstOrCreate(['slug' => $slug], fn (): array => [
                     'category_id' => $category->id,
                     'name' => $name,
                     'summary' => $summary,
