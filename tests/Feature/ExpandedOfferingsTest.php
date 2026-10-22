@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Category;
+use App\Models\Product;
 use App\Models\Service;
 use Database\Seeders\ExpandedOfferingsSeeder;
 use Database\Seeders\SiteContentSeeder;
@@ -36,16 +37,34 @@ class ExpandedOfferingsTest extends TestCase
             ->assertSee('Ters ozmoz (RO) sistemleri');
     }
 
+    public function test_new_categories_list_products_with_details(): void
+    {
+        $this->get('/urunler/kategori/gider-acici-kimyasallar')
+            ->assertOk()
+            ->assertSee('Sıvı Gider Açıcı')
+            ->assertSee('Biyolojik Gider ve Yağ Tutucu Bakım Ürünü');
+
+        $this->get('/urunler/flushing-tesisat-temizleme-kimyasali')
+            ->assertOk()
+            ->assertSee('Kullanım Amacı')
+            ->assertSee('Yeni tesisatların devreye alınması');
+
+        $this->get('/urunler/sauna-isiticilari')
+            ->assertOk()
+            ->assertSee('Kullanım Alanı');
+    }
+
     public function test_empty_categories_show_an_inquiry_box(): void
     {
+        Product::query()->whereRelation('category', 'slug', 'buz-onleyici-solusyon')->delete();
+
         $this->get('/urunler/kategori/buz-onleyici-solusyon')
             ->assertOk()
             ->assertSee('Buz Önleyici Solüsyon hakkında bilgi alın');
 
         $this->get('/urunler')
             ->assertOk()
-            ->assertSee('Yüzey Temizleyici Kimyasallar')
-            ->assertSee('Gider Açıcı Kimyasallar hakkında bilgi alın');
+            ->assertSee('Buz Önleyici Solüsyon hakkında bilgi alın');
     }
 
     public function test_secondary_email_is_shown_across_the_site(): void
@@ -64,5 +83,6 @@ class ExpandedOfferingsTest extends TestCase
 
         $this->assertSame('Düzenlenmiş Başlık', Service::query()->where('slug', 'atik-su-aritma-sistemleri')->value('title'));
         $this->assertSame(1, Category::query()->where('slug', 'gider-acici-kimyasallar')->count());
+        $this->assertSame(3, Product::query()->whereRelation('category', 'slug', 'gider-acici-kimyasallar')->count());
     }
 }
