@@ -14,11 +14,26 @@ use Illuminate\Support\Facades\File;
 /**
  * Additional services, product categories with their products and contact details (October 2026).
  *
- * Only creates missing records (and only then touches the media disk), so it is safe to run on production:
+ * Only creates missing records and replaces the generic images of untouched ones (never admin uploads),
+ * so it is safe to run on production:
  * php artisan db:seed --class=ExpandedOfferingsSeeder --force
  */
 class ExpandedOfferingsSeeder extends Seeder
 {
+    /**
+     * Generic images the first version of this seeder used before dedicated images were added.
+     *
+     * @var list<string>
+     */
+    private const PLACEHOLDER_IMAGES = [
+        'seed/hero/selale-havuz.jpg',
+        'seed/hero/kimyasal-havuz.jpg',
+        'seed/misc/makine-dairesi.jpg',
+        'seed/misc/teknik-servis.jpg',
+        'seed/misc/bakim-temizlik.jpg',
+        'seed/services/su-analizi.jpg',
+    ];
+
     public function run(): void
     {
         $this->seedSettings();
@@ -36,16 +51,16 @@ class ExpandedOfferingsSeeder extends Seeder
     private function seedServices(): void
     {
         $services = [
-            ['Hamam, Sauna ve Buhar Odası Yapımı', 'hamam-sauna-ve-buhar-odasi-yapimi', 'flame', 'hero/selale-havuz.jpg', 'Otel, spa, spor salonu ve konutlar için hamam, sauna ve buhar odalarını projeden anahtar teslime kadar hayata geçiriyoruz.', [
+            ['Hamam, Sauna ve Buhar Odası Yapımı', 'hamam-sauna-ve-buhar-odasi-yapimi', 'flame', 'offerings/hamam-sauna-ve-buhar-odasi-yapimi.jpg', 'Otel, spa, spor salonu ve konutlar için hamam, sauna ve buhar odalarını projeden anahtar teslime kadar hayata geçiriyoruz.', [
                 'Türk hamamı projelendirme ve yapımı', 'Fin saunası ve kabin sauna kurulumu', 'Buhar odası ve buhar jeneratörü montajı', 'Isıya ve neme dayanıklı yalıtım ve kaplama', 'Isıtıcı, kontrol paneli ve aksesuar temini', 'Periyodik bakım ve teknik servis',
             ]],
-            ['Atık Su Arıtma Sistemleri', 'atik-su-aritma-sistemleri', 'recycle', 'misc/makine-dairesi.jpg', 'Evsel ve endüstriyel atık suları yasal deşarj standartlarına uygun şekilde arıtan, geri kazanımı mümkün kılan sistemler kuruyoruz.', [
+            ['Atık Su Arıtma Sistemleri', 'atik-su-aritma-sistemleri', 'recycle', 'offerings/atik-su-aritma-sistemleri.jpg', 'Evsel ve endüstriyel atık suları yasal deşarj standartlarına uygun şekilde arıtan, geri kazanımı mümkün kılan sistemler kuruyoruz.', [
                 'Evsel ve endüstriyel atık su arıtma tesisleri', 'Paket arıtma sistemleri', 'Gri su geri kazanım çözümleri', 'Arıtma kimyasalları temini ve dozajlama', 'Deşarj standartlarına uygunluk analizleri', 'İşletme, bakım ve revizyon hizmetleri',
             ]],
-            ['İçme Suyu Arıtma Sistemleri', 'icme-suyu-aritma-sistemleri', 'glass-water', 'services/su-analizi.jpg', 'Konut, site, işletme ve tesisler için sağlıklı, temiz ve güvenli içme suyu sağlayan arıtma sistemleri kuruyoruz.', [
+            ['İçme Suyu Arıtma Sistemleri', 'icme-suyu-aritma-sistemleri', 'glass-water', 'offerings/icme-suyu-aritma-sistemleri.jpg', 'Konut, site, işletme ve tesisler için sağlıklı, temiz ve güvenli içme suyu sağlayan arıtma sistemleri kuruyoruz.', [
                 'Ters ozmoz (RO) sistemleri', 'Kum, karbon ve multimedya filtreler', 'Su yumuşatma sistemleri', 'UV dezenfeksiyon ve klorlama', 'Su analizi ve ihtiyaç tespiti', 'Filtre değişimi ve periyodik bakım',
             ]],
-            ['Kapalı Devre Su Şartlandırma', 'kapali-devre-su-sartlandirma', 'refresh-cw', 'misc/teknik-servis.jpg', 'Isıtma ve soğutma tesisatlarında korozyon, kireç ve tortuyu önleyerek sistem verimini ve ekipman ömrünü artırıyoruz.', [
+            ['Kapalı Devre Su Şartlandırma', 'kapali-devre-su-sartlandirma', 'refresh-cw', 'offerings/kapali-devre-su-sartlandirma.jpg', 'Isıtma ve soğutma tesisatlarında korozyon, kireç ve tortuyu önleyerek sistem verimini ve ekipman ömrünü artırıyoruz.', [
                 'Kalorifer ve kazan devreleri şartlandırması', 'Soğutma kulesi ve chiller devreleri', 'Tesisat temizliği (flushing) uygulamaları', 'Korozyon ve kireç önleyici kimyasal dozajı', 'Antifriz ve buz önleyici uygulamalar', 'Düzenli su analizi ve raporlama',
             ]],
         ];
@@ -53,7 +68,7 @@ class ExpandedOfferingsSeeder extends Seeder
         $nextSortOrder = (int) Service::query()->max('sort_order') + 1;
 
         foreach ($services as $index => [$title, $slug, $icon, $image, $summary, $features]) {
-            Service::query()->firstOrCreate(['slug' => $slug], fn (): array => [
+            $service = Service::query()->firstOrCreate(['slug' => $slug], fn (): array => [
                 'title' => $title,
                 'icon' => $icon,
                 'summary' => $summary,
@@ -63,6 +78,8 @@ class ExpandedOfferingsSeeder extends Seeder
                 'is_featured' => false,
                 'sort_order' => $nextSortOrder + $index,
             ]);
+
+            $this->replacePlaceholderImage($service, $image);
         }
     }
 
@@ -76,7 +93,7 @@ class ExpandedOfferingsSeeder extends Seeder
                 'name' => 'Hamam, Sauna ve Buhar Odası Ekipmanları',
                 'slug' => 'hamam-sauna-ve-buhar-odasi-ekipmanlari',
                 'icon' => 'thermometer',
-                'image' => 'hero/selale-havuz.jpg',
+                'image' => 'offerings/hamam-sauna-ve-buhar-odasi-ekipmanlari.jpg',
                 'subtitle' => 'Isı ve Buhar Çözümleri',
                 'description' => 'Sauna ısıtıcıları, buhar jeneratörleri, kontrol panelleri ve hamam, sauna, buhar odası aksesuarları.',
                 'labels' => $equipment,
@@ -99,7 +116,7 @@ class ExpandedOfferingsSeeder extends Seeder
                 'name' => 'Atık Su Arıtma Kimyasalları',
                 'slug' => 'atik-su-aritma-kimyasallari',
                 'icon' => 'recycle',
-                'image' => 'misc/makine-dairesi.jpg',
+                'image' => 'offerings/atik-su-aritma-kimyasallari.jpg',
                 'subtitle' => 'Arıtma ve Geri Kazanım',
                 'description' => 'Evsel ve endüstriyel atık su arıtımında kullanılan koagülant, flokülant, pH düzenleyici ve koku giderici kimyasallar.',
                 'labels' => $chemical,
@@ -125,7 +142,7 @@ class ExpandedOfferingsSeeder extends Seeder
                 'name' => 'Gider Açıcı Kimyasallar',
                 'slug' => 'gider-acici-kimyasallar',
                 'icon' => 'pipette',
-                'image' => 'misc/bakim-temizlik.jpg',
+                'image' => 'offerings/gider-acici-kimyasallar.jpg',
                 'subtitle' => 'Tesisat Bakımı',
                 'description' => 'Lavabo, gider, rögar ve tesisat hatlarındaki yağ, saç ve organik tıkanıklıkları etkili şekilde çözen kimyasallar.',
                 'labels' => $chemical,
@@ -145,7 +162,7 @@ class ExpandedOfferingsSeeder extends Seeder
                 'name' => 'Buz Önleyici Solüsyon',
                 'slug' => 'buz-onleyici-solusyon',
                 'icon' => 'snowflake',
-                'image' => 'hero/kimyasal-havuz.jpg',
+                'image' => 'offerings/buz-onleyici-solusyon.jpg',
                 'subtitle' => 'Kış Koruması',
                 'description' => 'Isıtma ve soğutma tesisatları, yollar ve yürüme alanları için donmayı ve buzlanmayı önleyen solüsyonlar.',
                 'labels' => $chemical,
@@ -165,7 +182,7 @@ class ExpandedOfferingsSeeder extends Seeder
                 'name' => 'Kapalı Devre ve Flushing Kimyasalları',
                 'slug' => 'kapali-devre-ve-flushing-kimyasallari',
                 'icon' => 'refresh-cw',
-                'image' => 'misc/teknik-servis.jpg',
+                'image' => 'offerings/kapali-devre-ve-flushing-kimyasallari.jpg',
                 'subtitle' => 'Tesisat Şartlandırma',
                 'description' => 'Kapalı devre ısıtma ve soğutma sistemleri için korozyon ve kireç önleyici, tesisat temizleme (flushing) kimyasalları.',
                 'labels' => $chemical,
@@ -188,7 +205,7 @@ class ExpandedOfferingsSeeder extends Seeder
                 'name' => 'Yüzey Temizleyici Kimyasallar',
                 'slug' => 'yuzey-temizleyici-kimyasallar',
                 'icon' => 'spray-can',
-                'image' => 'misc/bakim-temizlik.jpg',
+                'image' => 'offerings/yuzey-temizleyici-kimyasallar.jpg',
                 'subtitle' => 'Temizlik ve Hijyen',
                 'description' => 'Havuz kenarı, seramik, derz, paslanmaz ve genel yüzeyler için kir, kireç ve yağ çözücü temizlik kimyasalları.',
                 'labels' => $chemical,
@@ -221,18 +238,35 @@ class ExpandedOfferingsSeeder extends Seeder
                 'sort_order' => $nextSortOrder + $index,
             ]);
 
+            $this->replacePlaceholderImage($category, $data['image']);
+
             foreach ($data['products'] as $productIndex => [$name, $slug, $summary, $specValues]) {
-                Product::query()->firstOrCreate(['slug' => $slug], fn (): array => [
+                $productImage = File::exists(database_path("seeders/images/offerings/{$slug}.jpg")) ? "offerings/{$slug}.jpg" : $data['image'];
+
+                $product = Product::query()->firstOrCreate(['slug' => $slug], fn (): array => [
                     'category_id' => $category->id,
                     'name' => $name,
                     'summary' => $summary,
                     'description' => '<p>'.$summary.'</p><p>İhtiyacınıza en uygun ürünü seçmeniz, doğru kullanım ve dozaj konusunda uzman ekibimiz size destek olur.</p>',
-                    'image' => $category->image,
+                    'image' => $this->image($productImage),
                     'specs' => collect($data['labels'])->zip($specValues)->map(fn ($pair): array => ['label' => $pair[0], 'value' => $pair[1]])->all(),
                     'is_featured' => false,
                     'sort_order' => $productIndex,
                 ]);
+
+                $this->replacePlaceholderImage($product, $productImage);
             }
+        }
+    }
+
+    /**
+     * Swap the generic image the first version of this seeder assigned for the dedicated one,
+     * leaving images uploaded from the admin panel untouched.
+     */
+    private function replacePlaceholderImage(Service|Category|Product $record, string $relativePath): void
+    {
+        if (in_array($record->image, self::PLACEHOLDER_IMAGES, true)) {
+            $record->update(['image' => $this->image($relativePath)]);
         }
     }
 

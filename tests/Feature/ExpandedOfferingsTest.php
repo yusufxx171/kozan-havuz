@@ -85,4 +85,23 @@ class ExpandedOfferingsTest extends TestCase
         $this->assertSame(1, Category::query()->where('slug', 'gider-acici-kimyasallar')->count());
         $this->assertSame(3, Product::query()->whereRelation('category', 'slug', 'gider-acici-kimyasallar')->count());
     }
+
+    public function test_seeder_replaces_generic_images_but_keeps_uploaded_ones(): void
+    {
+        Service::query()->where('slug', 'atik-su-aritma-sistemleri')->update(['image' => 'seed/misc/makine-dairesi.jpg']);
+        Product::query()->where('slug', 'koagulantlar')->update(['image' => 'seed/misc/makine-dairesi.jpg']);
+        Product::query()->where('slug', 'kopuk-kesiciler')->update(['image' => 'uploads/kopuk.jpg']);
+
+        $this->seed(ExpandedOfferingsSeeder::class);
+
+        $this->assertSame('seed/offerings/atik-su-aritma-sistemleri.jpg', Service::query()->where('slug', 'atik-su-aritma-sistemleri')->value('image'));
+        $this->assertSame('seed/offerings/koagulantlar.jpg', Product::query()->where('slug', 'koagulantlar')->value('image'));
+        $this->assertSame('uploads/kopuk.jpg', Product::query()->where('slug', 'kopuk-kesiciler')->value('image'));
+        Storage::disk('public')->assertExists('seed/offerings/koagulantlar.jpg');
+    }
+
+    public function test_products_without_a_dedicated_image_use_their_category_image(): void
+    {
+        $this->assertSame('seed/offerings/gider-acici-kimyasallar.jpg', Product::query()->where('slug', 'sivi-gider-acici')->value('image'));
+    }
 }
