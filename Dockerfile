@@ -1,55 +1,45 @@
-# Kozan Havuz – production image for Coolify
-# PHP 8.4 + Nginx (serversideup/php), assets built in a separate Node stage.
-
-############################
-# 1) Composer dependencies #
-############################
-FROM serversideup/php:8.4-cli AS vendor
-WORKDIR /var/www/html
+FROM composer:2 AS vendor
+COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
+RUN install-php-extensions intl
+WORKDIR /app
 COPY composer.json composer.lock ./
-# Platform extensions (intl, gd, exif) are installed in the final image; skip the check here.
-RUN composer install --no-dev --no-interaction --no-scripts --no-autoloader --prefer-dist \
-    --ignore-platform-req=ext-intl --ignore-platform-req=ext-gd --ignore-platform-req=ext-exif
+RUN composer install --no-dev --no-scripts --no-autoloader --prefer-dist --no-interaction
 
-######################
-# 2) Front-end build #
-######################
-FROM node:22-alpine AS assets
+FROM node:22-bookworm-slim AS assets
 WORKDIR /app
 COPY package.json package-lock.json ./
-RUN npm ci --no-audit --no-fund
-COPY resources ./resources
-COPY public ./public
-COPY vite.config.js ./
-# Tailwind scans vendor views (pagination), so they must exist at build time.
-COPY --from=vendor /var/www/html/vendor ./vendor
+RUN npm ci
+COPY . .
+COPY --from=vendor /app/vendor ./vendor
 RUN npm run build
 
-##################
-# 3) Application #
-##################
-FROM serversideup/php:8.4-fpm-nginx AS app
+FROM php:8.4-fpm
 
-USER root
-RUN install-php-extensions intl exif gd
-USER www-data
+COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
+COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
 
-WORKDIR /var/www/html
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends nginx supervisor \
+ && rm -rf /var/lib/apt/lists/*
 
-# Laravel automations of the serversideup image (run on every container start):
-# migrations, storage:link and config/route/view caching.
-ENV PHP_OPCACHE_ENABLE=1 \
-    AUTORUN_ENABLED=true \
-    AUTORUN_LARAVEL_MIGRATION=true \
-    AUTORUN_LARAVEL_STORAGE_LINK=true \
-    SSL_MODE=off
+RUN install-php-extensions pdo_mysql intl bcmath gd exif zip opcache pcntl redis
 
-COPY --chown=www-data:www-data . .
-COPY --chown=www-data:www-data --from=vendor /var/www/html/vendor ./vendor
-COPY --chown=www-data:www-data --from=assets /app/public/build ./public/build
+RUN cp "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+COPY docker/php.ini $PHP_INI_DIR/conf.d/zz-kremal.ini
+COPY docker/php-fpm.conf /usr/local/etc/php-fpm.d/zz-kremal.conf
+COPY docker/nginx.conf /etc/nginx/nginx.conf
+COPY docker/supervisord.conf /etc/supervisor/supervisord.conf
+COPY --chmod=755 docker/start.sh /usr/local/bin/start
+
+WORKDIR /app
+
+COPY --from=vendor /app/vendor ./vendor
+COPY . .
+COPY --from=assets /app/public/build ./public/build
 
 RUN composer dump-autoload --optimize --no-dev \
-    && php artisan filament:assets \
-    && php artisan package:discover --ansi
+ && chown -R www-data:www-data storage bootstrap/cache
 
-EXPOSE 8080
+EXPOSE 3000
+
+CMD ["start"]
